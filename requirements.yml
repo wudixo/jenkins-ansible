@@ -1,3 +1,25 @@
-collections:
-- name: community.general
-- name: ansible.posix
+---
+- name: First Play - Docker Image Build
+  hosts: docker
+  tasks:
+    - name: Copy Dockerfile
+      copy:
+       src: Dockerfile
+       dest: /home/ansadmin/
+    - name: Copy Artifact
+      copy:
+       src: target
+       dest: /home/ansadmin
+    - name : Build image
+      command: docker build -t wudixo/mavenwebapp .
+    - name : Push Docker Image
+      command: docker push wudixo/mavenwebapp
+- name: Second Play - K8s Deployment
+  hosts: ekshost
+  tasks:
+   - name: 
+     copy:
+       src: k8s-deploy.yml
+       dest: /home/ansadmin
+   - name : K8S Deployment
+     command: kubectl apply -f k8s-deploy.yml
