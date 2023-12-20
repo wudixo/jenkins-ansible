@@ -24,7 +24,7 @@ pipeline {
             steps{
                steps {
                 	script {
-                		sh 'ansible-playbook task.yml'
+                		sh 'ansible-playbook requirements.yml'
                 	}
                 }
             }
